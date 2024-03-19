@@ -31,9 +31,13 @@ int main(int argc, char **argv) {
 					}
 				}
 			}
+		} else {
+			throw std::runtime_error(std::format("\"{}\" isn't a regular file nor a directory", path));
 		}
-	} catch (std::exception& ex) {
-		std::cerr << ex.what() << std::endl;
+	} catch (Exiv2::Error& e) {
+		std::cerr << std::format("Exiv2 error: \"{}\".\n", e.what());
+	}	catch (std::exception& ex) {
+		std::cerr << std::format("Error: \"{}\".\n", ex.what());
 		return EXIT_FAILURE;
 	}
 	return EXIT_SUCCESS;
